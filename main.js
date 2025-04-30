@@ -141,19 +141,23 @@ const rooms = [
 		},
 	},
 ];
-
-const warmOverlay = `linear-gradient(
+// FIX FOUR
+const coolOverlay = `linear-gradient(
     to bottom,
     rgba(141, 158, 247, 0.2),
     rgba(194, 197, 215, 0.1)
   )`;
 
-const coolOverlay = `linear-gradient(to bottom, rgba(236, 96, 98, 0.2), rgba(248, 210, 211, 0.13))`;
+const warmOverlay = `linear-gradient(
+	 to bottom,
+	 rgba(236, 96, 98, 0.2),
+	 rgba(248, 210, 211, 0.13)
+  )`;
 
 const setInitialOverlay = () => {
-	document.querySelector(
-		".room"
-	).style.backgroundImage = `url('${rooms[0].image}')`;
+	// document.querySelector(
+	// 	".room"
+	// ).style.backgroundImage = `url('${rooms[0].image}')`; // FIX ONE
 
 	document.querySelector(".room").style.backgroundImage = `${
 		rooms[0].currTemp < 25 ? coolOverlay : warmOverlay
@@ -169,6 +173,7 @@ const setOverlay = (room) => {
 // Set svg accordingly
 const svgPoint = document.querySelector(".point");
 const angleOffset = 86;
+
 const calculatePointPosition = (currTemp) => {
 	const normalizedTemp = (currTemp - 10) / (32 - 10);
 	const angle = normalizedTemp * 180 + angleOffset;
@@ -203,7 +208,7 @@ document.querySelector(".currentTemp").innerText = `${rooms[0].currTemp}°`;
 // Add new options from rooms array
 rooms.forEach((room) => {
 	const option = document.createElement("option");
-	option.value = room.name;
+	option.value = room.name; // FIX TWO
 	option.textContent = room.name;
 	roomSelect.appendChild(option);
 });
@@ -232,17 +237,14 @@ roomSelect.addEventListener("change", function () {
 	setSelectedRoom(selectedRoom);
 });
 
-// Set preset temperatures
-const defaultSettings = document.querySelector(".default-settings");
-defaultSettings.addEventListener("click", function (e) {});
-
 // Increase and decrease temperature
 document.getElementById("increase").addEventListener("click", () => {
 	const room = rooms.find((currRoom) => currRoom.name === selectedRoom);
-	const increaseRoomTemperature = room.increaseTemp;
+	const increaseRoomTemperature = room.increaseTemp(); // FIX THREE
+	console.log("increase btn", increaseRoomTemperature);
 
 	if (room.currTemp < 32) {
-		increaseRoomTemperature();
+		increaseRoomTemperature;
 	}
 
 	setIndicatorPoint(room.currTemp);
@@ -260,10 +262,11 @@ document.getElementById("increase").addEventListener("click", () => {
 
 document.getElementById("reduce").addEventListener("click", () => {
 	const room = rooms.find((currRoom) => currRoom.name === selectedRoom);
-	const decreaseRoomTemperature = room.decreaseTemp;
+	const decreaseRoomTemperature = room.decreaseTemp(); // FIX THREE
+	console.log("decrease btn", decreaseRoomTemperature);
 
 	if (room.currTemp > 10) {
-		decreaseRoomTemperature();
+		decreaseRoomTemperature;
 	}
 
 	setIndicatorPoint(room.currTemp);
@@ -281,6 +284,34 @@ document.getElementById("reduce").addEventListener("click", () => {
 
 const coolBtn = document.getElementById("cool");
 const warmBtn = document.getElementById("warm");
+
+// Set preset temperatures
+const defaultSettings = document.querySelector(".default-settings");
+defaultSettings.addEventListener("click", function (e) {
+	const buttonId = e.target.closest("button")?.id;
+	console.log(buttonId, "- button clicked");
+	if (!buttonId) return;
+
+	const currRoom = rooms.find((room) => room.name === selectedRoom);
+	console.log(currRoom);
+
+	if (!currRoom) return;
+
+	if (buttonId === "cool") {
+		currRoom.currTemp = currRoom.coldPreset;
+		console.log(currRoom.coldPreset);
+		console.log(currRoom);
+		console.log(currRoom.currTemp);
+	} else if (buttonId === "warm") {
+		currRoom.currTemp = currRoom.warmPreset;
+		console.log(currRoom.warmPreset);
+		console.log(currRoom);
+		console.log(currRoom.currTemp);
+	}
+
+	document.getElementById("temp").textContent = `${currRoom.currTemp}°`;
+	document.querySelector(".currentTemp").innerText = `${currRoom.currTemp}°`;
+});
 
 const inputsDiv = document.querySelector(".inputs");
 // Toggle preset inputs
