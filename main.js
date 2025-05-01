@@ -253,12 +253,12 @@ setInitialOverlay();
 
 document.querySelector(".currentTemp").innerText = `${rooms[0].currTemp}°`;
 // Add new options from rooms array
-rooms.forEach((room) => {
-	const option = document.createElement("option");
-	option.value = room.name; // FIX TWO
-	option.textContent = room.name;
-	roomSelect.appendChild(option);
-});
+// rooms.forEach((room) => {
+// 	const option = document.createElement("option");
+// 	option.value = room.name; // FIX TWO
+// 	option.textContent = room.name;
+// 	roomSelect.appendChild(option);
+// });
 
 // Set current temperature to currently selected room
 
@@ -350,10 +350,12 @@ defaultSettings.addEventListener("click", function (e) {
 		currRoom.currTemp = currRoom.coldPreset;
 		console.log(currRoom.currTemp);
 		console.log(currRoom.coldPreset);
+		setOverlay(currRoom);
 	} else if (buttonId === "warm") {
 		currRoom.currTemp = currRoom.warmPreset;
 		console.log(currRoom.currTemp);
 		console.log(currRoom.warmPreset);
+		setOverlay(currRoom);
 	}
 
 	document.getElementById("temp").textContent = `${currRoom.currTemp}°`;
@@ -462,7 +464,8 @@ const generateRooms = () => {
 			saveRoomDetails();
 			generateRooms();
 			console.log("All AC's turned ON!");
-			alert("All AC's turned ON!");
+			showNotification("All AC's turned ON!");
+			toast.style.backgroundColor = "";
 		}
 	});
 
@@ -571,6 +574,7 @@ const checkScheduleAndToggleAC = () => {
 			room.airConditionerOn = true;
 			console.log(`${room.name} AC turned ON by schedule...`);
 			showNotification(`${room.name} AC turned ON by schedule...`);
+			toast.style.backgroundColor = "";
 			saveRoomDetails();
 			generateRooms();
 		}
@@ -578,6 +582,7 @@ const checkScheduleAndToggleAC = () => {
 			room.airConditionerOn = false;
 			console.log(`${room.name} AC turned OFF by schedule...`);
 			showNotification(`${room.name} AC turned OFF by schedule...`);
+			toast.style.backgroundColor = "";
 			saveRoomDetails();
 			generateRooms();
 		}
@@ -588,12 +593,12 @@ const checkScheduleAndToggleAC = () => {
 setInterval(checkScheduleAndToggleAC, 30000);
 
 // toast for auto-triggered AC...
+const toastContainer = document.getElementById("notification-container");
+const toast = document.createElement("p");
 function showNotification(message) {
-	const container = document.getElementById("notification-container");
-	const toast = document.createElement("p");
 	toast.className = "toast";
 	toast.textContent = message;
-	container.appendChild(toast);
+	toastContainer.appendChild(toast);
 
 	setTimeout(() => {
 		toast.remove();
@@ -612,65 +617,101 @@ openModalBtn.addEventListener("click", () => {
 
 cancelAddRoomBtn.addEventListener("click", () => {
 	modal.classList.add("hidden");
+	newRoomForm.reset();
 	console.log("cancel btn clicked!");
 });
 
-// add room functionality...
-const confirmAddRoom = document.getElementById("confirmAddRoom");
+// handling image preview...
+const newRoomImgInput = document.getElementById("newRoomImage");
+const previewImage = document.getElementById("previewImage");
 
-confirmAddRoom.addEventListener("click", () => {
+newRoomImgInput.addEventListener("change", function () {
+	const file = this.files[0];
+	if (file) {
+		const reader = new FileReader();
+		reader.onload = function (e) {
+			previewImage.src = e.target.result;
+			previewImage.style.display = "block";
+		};
+		reader.readAsDataURL(file); // converts to base64 string...
+	}
+});
+
+// add room functionality...
+const newRoomForm = document.getElementById("addRoomForm");
+
+newRoomForm.addEventListener("submit", function (e) {
+	e.preventDefault();
+
 	const name = document.getElementById("newRoomName").value;
-	const currTemp = document.getElementById("newRoomTemp").value;
-	const coldPreset = document.getElementById("newColdPreset").value;
-	const warmPreset = document.getElementById("newWarmPreset").value;
-	const image = document.getElementById("newRoomImage").value;
+	const currTemp = parseInt(document.getElementById("newRoomTemp").value);
+	const coldPreset = parseInt(document.getElementById("newColdPreset").value);
+	const warmPreset = parseInt(document.getElementById("newWarmPreset").value);
+	const newRoomImgFile = document.getElementById("newRoomImage").files[0];
 
 	if (!name || isNaN(currTemp) || isNaN(coldPreset) || isNaN(warmPreset)) {
-		alert("Please fill in all fields appropriately...");
+		showNotification("Please fill in all fields appropriately...");
+		toast.style.backgroundColor = "red";
 		return;
 	}
 
-	const newRoom = {
-		name,
-		currTemp,
-		coldPreset,
-		warmPreset,
-		image,
-		airConditionerOn: false,
-		startTime: "16:30",
-		endTime: "20:30",
-		setCurrTemp(temp) {
-			this.currTemp = temp;
-		},
+	if (!newRoomImgFile) {
+		showNotification("Please select an image");
+		toast.style.backgroundColor = "red";
+		return;
+	}
 
-		setColdPreset(newCold) {
-			this.coldPreset = newCold;
-		},
+	const reader = new FileReader();
+	reader.onload = function (e) {
+		const imageBase64 = e.target.result;
 
-		setWarmPreset(newWarm) {
-			this.warmPreset = newWarm;
-		},
+		const newRoom = {
+			name,
+			currTemp,
+			coldPreset,
+			warmPreset,
+			image: imageBase64, // save the base64 string
+			airConditionerOn: false,
+			startTime: "16:30",
+			endTime: "20:30",
 
-		decreaseTemp() {
-			this.currTemp--;
-		},
+			setCurrTemp(temp) {
+				this.currTemp = temp;
+			},
 
-		increaseTemp() {
-			this.currTemp++;
-		},
-		toggleAircon() {
-			this.airConditionerOn
-				? (this.airConditionerOn = false)
-				: (this.airConditionerOn = true);
-		},
+			setColdPreset(newCold) {
+				this.coldPreset = newCold;
+			},
+
+			setWarmPreset(newWarm) {
+				this.warmPreset = newWarm;
+			},
+
+			decreaseTemp() {
+				this.currTemp--;
+			},
+
+			increaseTemp() {
+				this.currTemp++;
+			},
+			toggleAircon() {
+				this.airConditionerOn
+					? (this.airConditionerOn = false)
+					: (this.airConditionerOn = true);
+			},
+		};
+
+		rooms.push(newRoom);
+		console.log("new room added to rooms");
+		saveRoomDetails();
+		updateRoomDropdown();
+		generateRooms();
+		newRoomForm.reset();
+		modal.classList.add("hidden");
+		showNotification("New room added!");
+		toast.style.backgroundColor = "";
 	};
-
-	rooms.push(newRoom);
-	console.log("new room added to rooms");
-	saveRoomDetails();
-	updateRoomDropdown();
-	generateRooms();
-	modal.classList.add("hidden");
+	reader.readAsDataURL(newRoomImgFile);
 });
 
 // creating a function to update the dropdown...

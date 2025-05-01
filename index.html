@@ -137,13 +137,13 @@
             id="coolInput"
             type="number"
             min="10"
-            max="22"
+            max="24"
             placeholder="Cool"
           />
           <input
             id="warmInput"
             type="number"
-            min="22"
+            min="25"
             max="32"
             placeholder="Warm"
           />
@@ -156,7 +156,7 @@
           id="addRoomModal"
           class="modal hidden"
         >
-          <div class="modal-content">
+          <form id="addRoomForm">
             <h2>Add a New Room</h2>
             <input
               type="text"
@@ -170,27 +170,41 @@
               id="newRoomTemp"
               placeholder="Initial Temperature..."
             >
+            <span>
+              <input
+                type="number"
+                name="newColdPreset"
+                id="newColdPreset"
+                placeholder="Cold Preset..."
+              >
+              <input
+                type="number"
+                name="newWarmPreset"
+                id="newWarmPreset"
+                placeholder="Warm Preset..."
+              >
+            </span>
             <input
-              type="number"
-              name="newColdPreset"
-              id="newColdPreset"
-              placeholder="Cold Preset..."
-            >
-            <input
-              type="number"
-              name="newWarmPreset"
-              id="newWarmPreset"
-              placeholder="Warm Preset..."
-            >
-            <input
-              type="text"
-              name="newRoomImage"
+              type="file"
               id="newRoomImage"
-              placeholder="Image path..."
+              accept="image/*"
+              required
             >
-            <button id="cancelAddRoom">Cancel</button>
-            <button id="confirmAddRoom">Add Room</button>
-          </div>
+            <img
+              id="previewImage"
+              alt="roomImgPreview"
+            >
+            <span>
+              <button
+                id="cancelAddRoom"
+                type="button"
+              >Cancel</button>
+              <button
+                id="confirmAddRoom"
+                type="submit"
+              >Add Room</button>
+            </span>
+          </form>
         </div>
       </div>
     </div>
