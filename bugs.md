@@ -60,7 +60,21 @@ _STATUS_ - successful completion
 
 ## Bug #7
 
-- **Problem**: "Cold" and "Warm" temperature Preset buttons not working as expected
-- **Identification Method**: Through code inspection, I realised that the event listener for these preset buttons had an empty function, and so there was no action to be perfermed when a button was clicked
-- **Solution**: So I had to write a logic inside the event listener to conditionally check which button was clicked at any point in time, and then check the right preset temperature for the current room, and then render it on the UI accordingly.
-- **Status After Solution**: Fixed
+- **Problem**: Error message from a previous invalid input remains visible in future preset configurations.
+- **Identification Method**: I noticed this issue through UI observation. Thus, the error message from previous invalid inputs were still showing even when you have empty inputs on your next reopen of the configuration panel
+- **Solution**: So I had to style the error message not to display or to be set to hidden, whenever the configuration panel is opened. I also cleared the inputs on every reopen to avoid meeting previous values in the configuration.
+- **Status After Solution**: Error message hidden on every reopening of the configuration panel.
+
+## Bug #8
+
+- **Problem**: Alternate status messages on the AirConditioner
+- **Identification Method**:
+- **Solution**:
+- **Status After Solution**:
+
+## Bug #9
+
+- **Problem**: Cursor pointer symbol everywhere
+- **Identification Method**: Through UI observation, I realised that the cursor-pointer property was true for almost every single thing on the page, which is bad UX. The user knows that the pointer cursor is for selecting items on the webpage, but here is the case that every item on the page displays a pointer cursor, even if an item isnot selectable or clickable
+- **Solution**: So I went into the styling and realised that the entire `container` element had a cursor-pointer property, so i just took that line off.
+- **Status After Solution**: The pointer cursor only shows for selectable and clickable items
