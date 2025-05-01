@@ -1,146 +1,192 @@
+// saving room details to local storage...
+const saveRoomDetails = () => {
+	localStorage.setItem("roomsData", JSON.stringify(rooms));
+};
+
 // Room objects
-const rooms = [
-	{
-		name: "Living Room",
-		currTemp: 32,
-		coldPreset: 20,
-		warmPreset: 32,
-		image: "./assets/living-room.jpg",
-		airConditionerOn: false,
-		startTime: "16:30",
-		endTime: "20:00",
+let rooms = [];
 
-		setCurrTemp(temp) {
-			this.currTemp = temp;
-		},
+const loadRoomDetails = () => {
+	const storedRooms = localStorage.getItem("roomsData");
 
-		setColdPreset(newCold) {
-			this.coldPreset = newCold;
-		},
+	if (storedRooms) {
+		const savedRooms = JSON.parse(storedRooms);
 
-		setWarmPreset(newWarm) {
-			this.warmPreset = newWarm;
-		},
+		rooms = savedRooms.map((room) => ({
+			...room,
+			setCurrTemp(temp) {
+				this.currTemp = temp;
+			},
 
-		decreaseTemp() {
-			this.currTemp--;
-		},
+			setColdPreset(newCold) {
+				this.coldPreset = newCold;
+			},
 
-		increaseTemp() {
-			this.currTemp++;
-		},
-		toggleAircon() {
-			this.airConditionerOn
-				? (this.airConditionerOn = false)
-				: (this.airConditionerOn = true);
-		},
-	},
-	{
-		name: "Kitchen",
-		currTemp: 29,
-		coldPreset: 20,
-		warmPreset: 32,
-		image: "./assets/kitchen.jpg",
-		airConditionerOn: false,
-		startTime: "16:30",
-		endTime: "20:00",
+			setWarmPreset(newWarm) {
+				this.warmPreset = newWarm;
+			},
 
-		setCurrTemp(temp) {
-			this.currTemp = temp;
-		},
+			decreaseTemp() {
+				this.currTemp--;
+			},
 
-		setColdPreset(newCold) {
-			this.coldPreset = newCold;
-		},
+			increaseTemp() {
+				this.currTemp++;
+			},
+			toggleAircon() {
+				this.airConditionerOn
+					? (this.airConditionerOn = false)
+					: (this.airConditionerOn = true);
+			},
+		}));
+	} else {
+		rooms = [
+			{
+				name: "Living Room",
+				currTemp: 32,
+				coldPreset: 20,
+				warmPreset: 32,
+				image: "./assets/living-room.jpg",
+				airConditionerOn: false,
+				startTime: "16:30",
+				endTime: "20:00",
 
-		setWarmPreset(newWarm) {
-			this.warmPreset = newWarm;
-		},
+				setCurrTemp(temp) {
+					this.currTemp = temp;
+				},
 
-		decreaseTemp() {
-			this.currTemp--;
-		},
+				setColdPreset(newCold) {
+					this.coldPreset = newCold;
+				},
 
-		increaseTemp() {
-			this.currTemp++;
-		},
-		toggleAircon() {
-			this.airConditionerOn
-				? (this.airConditionerOn = false)
-				: (this.airConditionerOn = true);
-		},
-	},
-	{
-		name: "Bathroom",
-		currTemp: 30,
-		coldPreset: 20,
-		warmPreset: 32,
-		image: "./assets/bathroom.jpg",
-		airConditionerOn: false,
-		startTime: "16:30",
-		endTime: "20:00",
+				setWarmPreset(newWarm) {
+					this.warmPreset = newWarm;
+				},
 
-		setCurrTemp(temp) {
-			this.currTemp = temp;
-		},
+				decreaseTemp() {
+					this.currTemp--;
+				},
 
-		setColdPreset(newCold) {
-			this.coldPreset = newCold;
-		},
+				increaseTemp() {
+					this.currTemp++;
+				},
+				toggleAircon() {
+					this.airConditionerOn
+						? (this.airConditionerOn = false)
+						: (this.airConditionerOn = true);
+				},
+			},
+			{
+				name: "Kitchen",
+				currTemp: 29,
+				coldPreset: 20,
+				warmPreset: 32,
+				image: "./assets/kitchen.jpg",
+				airConditionerOn: false,
+				startTime: "16:30",
+				endTime: "20:00",
 
-		setWarmPreset(newWarm) {
-			this.warmPreset = newWarm;
-		},
+				setCurrTemp(temp) {
+					this.currTemp = temp;
+				},
 
-		decreaseTemp() {
-			this.currTemp--;
-		},
+				setColdPreset(newCold) {
+					this.coldPreset = newCold;
+				},
 
-		increaseTemp() {
-			this.currTemp++;
-		},
-		toggleAircon() {
-			this.airConditionerOn
-				? (this.airConditionerOn = false)
-				: (this.airConditionerOn = true);
-		},
-	},
-	{
-		name: "Bedroom",
-		currTemp: 31,
-		coldPreset: 20,
-		warmPreset: 32,
-		image: "./assets/bedroom.jpg",
-		airConditionerOn: false,
-		startTime: "16:30",
-		endTime: "20:00",
+				setWarmPreset(newWarm) {
+					this.warmPreset = newWarm;
+				},
 
-		setCurrTemp(temp) {
-			this.currTemp = temp;
-		},
+				decreaseTemp() {
+					this.currTemp--;
+				},
 
-		setColdPreset(newCold) {
-			this.coldPreset = newCold;
-		},
+				increaseTemp() {
+					this.currTemp++;
+				},
+				toggleAircon() {
+					this.airConditionerOn
+						? (this.airConditionerOn = false)
+						: (this.airConditionerOn = true);
+				},
+			},
+			{
+				name: "Bathroom",
+				currTemp: 30,
+				coldPreset: 20,
+				warmPreset: 32,
+				image: "./assets/bathroom.jpg",
+				airConditionerOn: false,
+				startTime: "16:30",
+				endTime: "20:00",
 
-		setWarmPreset(newWarm) {
-			this.warmPreset = newWarm;
-		},
+				setCurrTemp(temp) {
+					this.currTemp = temp;
+				},
 
-		decreaseTemp() {
-			this.currTemp--;
-		},
+				setColdPreset(newCold) {
+					this.coldPreset = newCold;
+				},
 
-		increaseTemp() {
-			this.currTemp++;
-		},
-		toggleAircon() {
-			this.airConditionerOn
-				? (this.airConditionerOn = false)
-				: (this.airConditionerOn = true);
-		},
-	},
-];
+				setWarmPreset(newWarm) {
+					this.warmPreset = newWarm;
+				},
+
+				decreaseTemp() {
+					this.currTemp--;
+				},
+
+				increaseTemp() {
+					this.currTemp++;
+				},
+				toggleAircon() {
+					this.airConditionerOn
+						? (this.airConditionerOn = false)
+						: (this.airConditionerOn = true);
+				},
+			},
+			{
+				name: "Bedroom",
+				currTemp: 31,
+				coldPreset: 20,
+				warmPreset: 32,
+				image: "./assets/bedroom.jpg",
+				airConditionerOn: false,
+				startTime: "16:30",
+				endTime: "20:00",
+
+				setCurrTemp(temp) {
+					this.currTemp = temp;
+				},
+
+				setColdPreset(newCold) {
+					this.coldPreset = newCold;
+				},
+
+				setWarmPreset(newWarm) {
+					this.warmPreset = newWarm;
+				},
+
+				decreaseTemp() {
+					this.currTemp--;
+				},
+
+				increaseTemp() {
+					this.currTemp++;
+				},
+				toggleAircon() {
+					this.airConditionerOn
+						? (this.airConditionerOn = false)
+						: (this.airConditionerOn = true);
+				},
+			},
+		];
+	}
+};
+
+loadRoomDetails();
+
 // FIX FOUR
 const coolOverlay = `linear-gradient(
     to bottom,
@@ -250,6 +296,7 @@ document.getElementById("increase").addEventListener("click", () => {
 	setIndicatorPoint(room.currTemp);
 	currentTemp.textContent = `${room.currTemp}°`;
 
+	saveRoomDetails();
 	generateRooms();
 
 	setOverlay(room);
@@ -272,6 +319,7 @@ document.getElementById("reduce").addEventListener("click", () => {
 	setIndicatorPoint(room.currTemp);
 	currentTemp.textContent = `${room.currTemp}°`;
 
+	saveRoomDetails();
 	generateRooms();
 
 	setOverlay(room);
@@ -299,14 +347,12 @@ defaultSettings.addEventListener("click", function (e) {
 
 	if (buttonId === "cool") {
 		currRoom.currTemp = currRoom.coldPreset;
-		console.log(currRoom.coldPreset);
-		console.log(currRoom);
 		console.log(currRoom.currTemp);
+		console.log(currRoom.coldPreset);
 	} else if (buttonId === "warm") {
 		currRoom.currTemp = currRoom.warmPreset;
-		console.log(currRoom.warmPreset);
-		console.log(currRoom);
 		console.log(currRoom.currTemp);
+		console.log(currRoom.warmPreset);
 	}
 
 	document.getElementById("temp").textContent = `${currRoom.currTemp}°`;
@@ -318,6 +364,9 @@ const inputsDiv = document.querySelector(".inputs");
 document.getElementById("newPreset").addEventListener("click", () => {
 	if (inputsDiv.classList.contains("hidden")) {
 		inputsDiv.classList.remove("hidden");
+		document.querySelector(".error").style.display = "none";
+		document.getElementById("warmInput").value = "";
+		document.getElementById("coolInput").value = "";
 	}
 });
 
@@ -331,18 +380,21 @@ document.getElementById("save").addEventListener("click", () => {
 	const coolInput = document.getElementById("coolInput");
 	const warmInput = document.getElementById("warmInput");
 	const errorSpan = document.querySelector(".error");
+	console.log(coolInput.value);
+	console.log(warmInput.value);
 
 	if (coolInput.value && warmInput.value) {
 		// Validate the data
-		if (coolInput.value < 10 || coolInput.value > 25) {
+		if (coolInput.value < 10 || coolInput.value > 24) {
 			errorSpan.style.display = "block";
-			errorSpan.innerText = "Enter valid temperatures (10° - 32°)";
+			errorSpan.innerText = "Enter valid COOL temperature values (10° - 24°)";
 		}
 
 		if (warmInput.value < 25 || warmInput.value > 32) {
 			errorSpan.style.display = "block";
-			errorSpan.innerText = "Enter valid temperatures (10° - 32°)";
+			errorSpan.innerText = "Enter valid WARM temperature values (25° - 32°)";
 		}
+
 		// Validation passed
 		// Set current room's presets
 		const currRoom = rooms.find((room) => room.name === selectedRoom);
@@ -352,6 +404,8 @@ document.getElementById("save").addEventListener("click", () => {
 
 		coolInput.value = "";
 		warmInput.value = "";
+
+		saveRoomDetails();
 	}
 });
 
@@ -374,18 +428,49 @@ const generateRooms = () => {
           </div>
 
           ${displayTime(room)}
+          ${displayTimeSchedule(room)}
          
           <span class="room-status" style="display: ${
 						room.airConditionerOn ? "" : "none"
-					}">${room.currTemp > 25 ? "Cooling room to: " : "Warming room to: "}${
+					}">${room.currTemp > 24 ? "Warming room to: " : "Cooling room to: "}${
 			room.currTemp
 		}°</span>
         </div>
     `;
 	});
 
+	const AC_container = document.createElement("div");
+	AC_container.id = "ac_container";
+
+	const allAC_btn = document.createElement("button");
+	allAC_btn.id = "turnOnAll";
+	allAC_btn.textContent = "Turn on All ACs";
+
 	roomsControlContainer.innerHTML = roomsHTML;
+	roomsControlContainer.appendChild(AC_container);
+	AC_container.appendChild(allAC_btn);
+
+	//taking start-time inputs...
+	document.querySelectorAll(".start-time").forEach((input) => {
+		input.addEventListener("change", (event) => {
+			const roomName = event.target.dataset.room;
+			const room = rooms.find((r) => r.name === roomName);
+			room.startTime = event.target.value;
+			console.log(roomName, "- startTime set to:", room.startTime);
+		});
+	});
+
+	// taking end-time inputs...
+	document.querySelectorAll(".end-time").forEach((input) => {
+		input.addEventListener("change", (event) => {
+			const roomName = event.target.dataset.room;
+			const room = rooms.find((r) => r.name === roomName);
+			room.endTime = event.target.value;
+			console.log(roomName, "- endtime set to:", room.endTime);
+		});
+	});
 };
+
 const displayTime = (room) => {
 	return `
       <div class="time-display">
@@ -428,6 +513,20 @@ const displayTime = (room) => {
       </div>
   `;
 };
+const displayTimeSchedule = (room) => {
+	return `
+      <div class="time-scheduler">
+        <label>
+		  Start Time:
+		  <input type="time" class="start-time" data-room="${room.name}" value="${room.startTime}"
+		  </label>
+        <label>
+		  End Time:
+		  <input type="time" class="end-time" data-room="${room.name}" value="${room.endTime}"
+		  </label>
+      </div>
+  `;
+};
 
 generateRooms();
 
@@ -437,10 +536,45 @@ document.querySelector(".rooms-control").addEventListener("click", (e) => {
 			(room) => room.name === e.target.parentNode.parentNode.id
 		);
 		room.toggleAircon();
+		saveRoomDetails();
 		generateRooms();
 	}
-
 	if (e.target.classList.contains("room-name")) {
 		setSelectedRoom(e.target.parentNode.parentNode.id);
 	}
 });
+
+// turning on all ACs...
+const universalAC_button = document.getElementById("turnOnAll");
+universalAC_button.addEventListener("click", () => {
+	rooms.forEach((room) => {
+		room.airConditionerOn = true;
+		saveRoomDetails();
+		generateRooms();
+	});
+	alert("All AC's turned on!");
+});
+
+// time checker logic...
+const checkScheduleAndToggleAC = () => {
+	const now = new Date();
+	const currentTime = now.toTimeString().slice(0, 5);
+	console.log("current time is:", currentTime);
+
+	rooms.forEach((room) => {
+		if (room.startTime === currentTime && !room.airConditionerOn) {
+			room.airConditionerOn = true;
+			console.log(`${room.name} AC turned ON by schedule...`);
+			saveRoomDetails();
+			generateRooms();
+		}
+		if (room.endTime === currentTime && room.airConditionerOn) {
+			room.airConditionerOn = false;
+			console.log(`${room.name} AC turned OFF by schedule...`);
+			saveRoomDetails();
+			generateRooms();
+		}
+	});
+};
+
+setInterval(checkScheduleAndToggleAC, 30000);
