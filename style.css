@@ -408,9 +408,6 @@ span.room-status {
 }
 
 #notification-container {
-	background-color: red;
-	width: 100px;
-	height: 20px;
 	position: fixed;
 	display: flex;
 	flex-direction: column;

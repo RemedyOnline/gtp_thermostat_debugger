@@ -183,6 +183,7 @@ const loadRoomDetails = () => {
 			},
 		];
 	}
+	updateRoomDropdown();
 };
 
 loadRoomDetails();
@@ -450,6 +451,21 @@ const generateRooms = () => {
 	roomsControlContainer.appendChild(AC_container);
 	AC_container.appendChild(allAC_btn);
 
+	// turning on all ACs...
+	const allAC_btns = document.getElementById("turnOnAll");
+
+	allAC_btns.addEventListener("click", (event) => {
+		if (event.target.id === "turnOnAll") {
+			rooms.forEach((room) => {
+				room.airConditionerOn = true;
+			});
+			saveRoomDetails();
+			generateRooms();
+			console.log("All AC's turned ON!");
+			alert("All AC's turned ON!");
+		}
+	});
+
 	//taking start-time inputs...
 	document.querySelectorAll(".start-time").forEach((input) => {
 		input.addEventListener("change", (event) => {
@@ -544,17 +560,6 @@ document.querySelector(".rooms-control").addEventListener("click", (e) => {
 	}
 });
 
-// turning on all ACs...
-const universalAC_button = document.getElementById("turnOnAll");
-universalAC_button.addEventListener("click", () => {
-	rooms.forEach((room) => {
-		room.airConditionerOn = true;
-		saveRoomDetails();
-		generateRooms();
-	});
-	alert("All AC's turned on!");
-});
-
 // time checker logic...
 const checkScheduleAndToggleAC = () => {
 	const now = new Date();
@@ -565,16 +570,118 @@ const checkScheduleAndToggleAC = () => {
 		if (room.startTime === currentTime && !room.airConditionerOn) {
 			room.airConditionerOn = true;
 			console.log(`${room.name} AC turned ON by schedule...`);
+			showNotification(`${room.name} AC turned ON by schedule...`);
 			saveRoomDetails();
 			generateRooms();
 		}
 		if (room.endTime === currentTime && room.airConditionerOn) {
 			room.airConditionerOn = false;
 			console.log(`${room.name} AC turned OFF by schedule...`);
+			showNotification(`${room.name} AC turned OFF by schedule...`);
 			saveRoomDetails();
 			generateRooms();
 		}
 	});
 };
 
+// checking scheduler every 30secs...
 setInterval(checkScheduleAndToggleAC, 30000);
+
+// toast for auto-triggered AC...
+function showNotification(message) {
+	const container = document.getElementById("notification-container");
+	const toast = document.createElement("p");
+	toast.className = "toast";
+	toast.textContent = message;
+	container.appendChild(toast);
+
+	setTimeout(() => {
+		toast.remove();
+	}, 10000);
+}
+
+// show/hide add-room-modal...
+const modal = document.getElementById("addRoomModal");
+const openModalBtn = document.getElementById("openAddRoomModal");
+const cancelAddRoomBtn = document.getElementById("cancelAddRoom");
+
+openModalBtn.addEventListener("click", () => {
+	modal.classList.remove("hidden");
+	console.log("open modal btn clicked!");
+});
+
+cancelAddRoomBtn.addEventListener("click", () => {
+	modal.classList.add("hidden");
+	console.log("cancel btn clicked!");
+});
+
+// add room functionality...
+const confirmAddRoom = document.getElementById("confirmAddRoom");
+
+confirmAddRoom.addEventListener("click", () => {
+	const name = document.getElementById("newRoomName").value;
+	const currTemp = document.getElementById("newRoomTemp").value;
+	const coldPreset = document.getElementById("newColdPreset").value;
+	const warmPreset = document.getElementById("newWarmPreset").value;
+	const image = document.getElementById("newRoomImage").value;
+
+	if (!name || isNaN(currTemp) || isNaN(coldPreset) || isNaN(warmPreset)) {
+		alert("Please fill in all fields appropriately...");
+		return;
+	}
+
+	const newRoom = {
+		name,
+		currTemp,
+		coldPreset,
+		warmPreset,
+		image,
+		airConditionerOn: false,
+		startTime: "16:30",
+		endTime: "20:30",
+		setCurrTemp(temp) {
+			this.currTemp = temp;
+		},
+
+		setColdPreset(newCold) {
+			this.coldPreset = newCold;
+		},
+
+		setWarmPreset(newWarm) {
+			this.warmPreset = newWarm;
+		},
+
+		decreaseTemp() {
+			this.currTemp--;
+		},
+
+		increaseTemp() {
+			this.currTemp++;
+		},
+		toggleAircon() {
+			this.airConditionerOn
+				? (this.airConditionerOn = false)
+				: (this.airConditionerOn = true);
+		},
+	};
+
+	rooms.push(newRoom);
+	console.log("new room added to rooms");
+	saveRoomDetails();
+	updateRoomDropdown();
+	generateRooms();
+	modal.classList.add("hidden");
+});
+
+// creating a function to update the dropdown...
+function updateRoomDropdown() {
+	const roomSelect = document.getElementById("rooms");
+	roomSelect.innerHTML = "";
+
+	rooms.forEach((room) => {
+		const option = document.createElement("option");
+		option.value = room.name;
+		option.textContent = room.name;
+		roomSelect.appendChild(option);
+	});
+}

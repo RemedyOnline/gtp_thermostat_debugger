@@ -49,6 +49,7 @@
     <div class="container animate__animated animate__fadeInUp">
       <div class="top-content">
         <h1 class="logo">Thermostat</h1>
+        <button id="openAddRoomModal">Add Room +</button>
         <select id="rooms"></select>
       </div>
       <!-- Interior card -->
@@ -150,6 +151,46 @@
           <button id="close"><ion-icon name="close"></ion-icon></button>
 
           <span class="error"></span>
+        </div>
+        <div
+          id="addRoomModal"
+          class="modal hidden"
+        >
+          <div class="modal-content">
+            <h2>Add a New Room</h2>
+            <input
+              type="text"
+              name="newRoomName"
+              id="newRoomName"
+              placeholder="Room Name..."
+            >
+            <input
+              type="number"
+              name="newRoomTemp"
+              id="newRoomTemp"
+              placeholder="Initial Temperature..."
+            >
+            <input
+              type="number"
+              name="newColdPreset"
+              id="newColdPreset"
+              placeholder="Cold Preset..."
+            >
+            <input
+              type="number"
+              name="newWarmPreset"
+              id="newWarmPreset"
+              placeholder="Warm Preset..."
+            >
+            <input
+              type="text"
+              name="newRoomImage"
+              id="newRoomImage"
+              placeholder="Image path..."
+            >
+            <button id="cancelAddRoom">Cancel</button>
+            <button id="confirmAddRoom">Add Room</button>
+          </div>
         </div>
       </div>
     </div>
