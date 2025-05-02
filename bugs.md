@@ -51,9 +51,9 @@
 ## Bug #8
 
 - **Problem**: Alternate status messages on the AirConditioner
-- **Identification Method**:
-- **Solution**:
-- **Status After Solution**:
+- **Identification Method**: So I noticed that on the frontend, as and when the temperature of an AC `increased` or `decreased`, the corresponding message for that particular activity was showing the opposite of the action that was being done.
+- **Solution**: So I inspected the script file and realised that the condition for displaying `warm message` for was set to true when the decrease button was click, instead of displaying `cool message`. And same for the increase button. So I just flipped the `less-than sign` to a `greater-than sign`
+- **Status After Solution**: AC status displays the expected message
 
 ## Bug #9
 
