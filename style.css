@@ -412,11 +412,21 @@ span.room-status {
 	display: flex;
 	justify-content: center;
 }
+
 #turnOnAll {
 	padding: 0.5rem 1rem;
 	border-radius: 0.5rem;
 	border: none;
-	background-color: #4caf50;
+	background-color: #4c7aaf;
+	color: white;
+	cursor: pointer;
+}
+
+#openAddRoomModal {
+	padding: 0.2rem 0.5rem;
+	border-radius: 0.5rem;
+	border: none;
+	background-color: #4c7aaf;
 	color: white;
 	cursor: pointer;
 }
@@ -474,7 +484,7 @@ span.room-status {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(255, 255, 255, 0.5);
 	z-index: 1000;
 	width: 100%;
 	height: 100%;
@@ -513,12 +523,16 @@ span.room-status {
 }
 
 .modal button:first-child {
-	background-color: var(--warm-red);
+	background-color: gray;
 	color: white;
 }
 
+.modal button:first-child:hover {
+	background-color: rgb(182, 182, 182);
+}
+
 .modal button:last-child {
-	background-color: var(--cool-blue);
+	background-color: #4c7aaf;
 	color: white;
 }
 
