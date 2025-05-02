@@ -1,0 +1,29 @@
+{
+	"name": "skilled-thermostat-debugger",
+	"version": "1.0.0",
+	"description": "",
+	"main": "main.js",
+	"scripts": {
+		"test": "jest --verbose --coverage"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/RemedyOnline/gtp_thermostat_debugger.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "commonjs",
+	"bugs": {
+		"url": "https://github.com/RemedyOnline/gtp_thermostat_debugger/issues"
+	},
+	"homepage": "https://github.com/RemedyOnline/gtp_thermostat_debugger#readme",
+	"devDependencies": {
+		"jest": "^29.7.0",
+		"jest-environment-jsdom": "^29.7.0",
+		"jsdom": "^26.1.0"
+	},
+	"jest": {
+		"testEnvironment": "jsdom"
+	}
+}
