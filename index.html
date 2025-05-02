@@ -49,6 +49,7 @@
     <div class="container animate__animated animate__fadeInUp">
       <div class="top-content">
         <h1 class="logo">Thermostat</h1>
+        <button id="openAddRoomModal">Add Room +</button>
         <select id="rooms"></select>
       </div>
       <!-- Interior card -->
@@ -136,13 +137,13 @@
             id="coolInput"
             type="number"
             min="10"
-            max="22"
+            max="24"
             placeholder="Cool"
           />
           <input
             id="warmInput"
             type="number"
-            min="22"
+            min="25"
             max="32"
             placeholder="Warm"
           />
@@ -150,6 +151,60 @@
           <button id="close"><ion-icon name="close"></ion-icon></button>
 
           <span class="error"></span>
+        </div>
+        <div
+          id="addRoomModal"
+          class="modal hidden"
+        >
+          <form id="addRoomForm">
+            <h2>Add a New Room</h2>
+            <input
+              type="text"
+              name="newRoomName"
+              id="newRoomName"
+              placeholder="Room Name..."
+            >
+            <input
+              type="number"
+              name="newRoomTemp"
+              id="newRoomTemp"
+              placeholder="Initial Temperature..."
+            >
+            <span>
+              <input
+                type="number"
+                name="newColdPreset"
+                id="newColdPreset"
+                placeholder="Cold Preset..."
+              >
+              <input
+                type="number"
+                name="newWarmPreset"
+                id="newWarmPreset"
+                placeholder="Warm Preset..."
+              >
+            </span>
+            <input
+              type="file"
+              id="newRoomImage"
+              accept="image/*"
+              required
+            >
+            <img
+              id="previewImage"
+              alt="roomImgPreview"
+            >
+            <span>
+              <button
+                id="cancelAddRoom"
+                type="button"
+              >Cancel</button>
+              <button
+                id="confirmAddRoom"
+                type="submit"
+              >Add Room</button>
+            </span>
+          </form>
         </div>
       </div>
     </div>
