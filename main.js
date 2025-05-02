@@ -202,10 +202,6 @@ const warmOverlay = `linear-gradient(
   )`;
 
 const setInitialOverlay = () => {
-	// document.querySelector(
-	// 	".room"
-	// ).style.backgroundImage = `url('${rooms[0].image}')`; // FIX ONE
-
 	document.querySelector(".room").style.backgroundImage = `${
 		rooms[0].currTemp < 25 ? coolOverlay : warmOverlay
 	}, url('${rooms[0].image}')`;
@@ -252,14 +248,6 @@ currentTemp.textContent = `${rooms[0].currTemp}°`;
 setInitialOverlay();
 
 document.querySelector(".currentTemp").innerText = `${rooms[0].currTemp}°`;
-// Add new options from rooms array
-// rooms.forEach((room) => {
-// 	const option = document.createElement("option");
-// 	option.value = room.name; // FIX TWO
-// 	option.textContent = room.name;
-// 	roomSelect.appendChild(option);
-// });
-
 // Set current temperature to currently selected room
 
 const setSelectedRoom = (selectedRoom) => {
@@ -285,51 +273,47 @@ roomSelect.addEventListener("change", function () {
 });
 
 // Increase and decrease temperature
-document.getElementById("increase").addEventListener("click", () => {
-	const room = rooms.find((currRoom) => currRoom.name === selectedRoom);
-	const increaseRoomTemperature = room.increaseTemp(); // FIX THREE
-	console.log("increase btn", increaseRoomTemperature);
+const attachEventListeners = () => {
+	const increaseBtn = document.getElementById("increase");
+	const reduceBtn = document.getElementById("reduce");
 
-	if (room.currTemp < 32) {
-		increaseRoomTemperature;
-	}
+	// Remove existing listeners if needed (optional safeguard)
+	increaseBtn.replaceWith(increaseBtn.cloneNode(true));
+	reduceBtn.replaceWith(reduceBtn.cloneNode(true));
 
-	setIndicatorPoint(room.currTemp);
-	currentTemp.textContent = `${room.currTemp}°`;
+	// Re-select after replacement
+	const newIncreaseBtn = document.getElementById("increase");
+	const newReduceBtn = document.getElementById("reduce");
 
-	saveRoomDetails();
-	generateRooms();
+	newIncreaseBtn.addEventListener("click", () => {
+		const room = rooms.find((currRoom) => currRoom.name === selectedRoom);
+		if (room.currTemp < 32) {
+			room.increaseTemp();
+		}
+		setIndicatorPoint(room.currTemp);
+		currentTemp.textContent = `${room.currTemp}°`;
+		saveRoomDetails();
+		generateRooms();
+		setOverlay(room);
+		document.querySelector(".currentTemp").innerText = `${room.currTemp}°`;
+	});
 
-	setOverlay(room);
+	newReduceBtn.addEventListener("click", () => {
+		const room = rooms.find((currRoom) => currRoom.name === selectedRoom);
+		if (room.currTemp > 10) {
+			room.decreaseTemp();
+		}
+		setIndicatorPoint(room.currTemp);
+		currentTemp.textContent = `${room.currTemp}°`;
+		saveRoomDetails();
+		generateRooms();
+		setOverlay(room);
+		document.querySelector(".currentTemp").innerText = `${room.currTemp}°`;
+	});
+};
 
-	warmBtn.style.backgroundColor = "#d9d9d9";
-	coolBtn.style.backgroundColor = "#d9d9d9";
-
-	document.querySelector(".currentTemp").innerText = `${room.currTemp}°`;
-});
-
-document.getElementById("reduce").addEventListener("click", () => {
-	const room = rooms.find((currRoom) => currRoom.name === selectedRoom);
-	const decreaseRoomTemperature = room.decreaseTemp(); // FIX THREE
-	console.log("decrease btn", decreaseRoomTemperature);
-
-	if (room.currTemp > 10) {
-		decreaseRoomTemperature;
-	}
-
-	setIndicatorPoint(room.currTemp);
-	currentTemp.textContent = `${room.currTemp}°`;
-
-	saveRoomDetails();
-	generateRooms();
-
-	setOverlay(room);
-
-	warmBtn.style.backgroundColor = "#d9d9d9";
-	coolBtn.style.backgroundColor = "#d9d9d9";
-
-	document.querySelector(".currentTemp").innerText = `${room.currTemp}°`;
-});
+// calling the increment and decrement buttons..
+attachEventListeners();
 
 const coolBtn = document.getElementById("cool");
 const warmBtn = document.getElementById("warm");
@@ -534,16 +518,24 @@ const displayTime = (room) => {
 };
 const displayTimeSchedule = (room) => {
 	return `
-      <div class="time-scheduler">
-        <label>
-		  Start Time:
-		  <input type="time" class="start-time" data-room="${room.name}" value="${room.startTime}"
-		  </label>
-        <label>
-		  End Time:
-		  <input type="time" class="end-time" data-room="${room.name}" value="${room.endTime}"
-		  </label>
+    <div class="time-scheduler" style="display: ${
+			room.airConditionerOn ? "" : "none"
+		}">
+      <div class="time-scheduler-inner">
+        <div class="time-block start">
+          <label>Set Start Time:</label>
+          <input type="time" class="start-time" data-room="${
+						room.name
+					}" value="${room.startTime}" />
+        </div>
+        <div class="time-block end">
+          <label>Set End Time:</label>
+          <input type="time" class="end-time" data-room="${room.name}" value="${
+		room.endTime
+	}" />
+        </div>
       </div>
+    </div>
   `;
 };
 
