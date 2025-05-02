@@ -14,6 +14,7 @@ This web application allows you to manage Air Conditioner (AC) schedules for dif
 - Each room has an AC switch (toggle button).
 - Toggle it ON to activate scheduling options for that room.
 - Toggle it OFF to disable the AC and hide the scheduling form.
+- Aside the individual power on button for each AC, we also have a `Turn On All ACs` button which turns on all ACs at the same time.
 
 ## ⏰ Scheduling Start and End Time
 
