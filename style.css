@@ -221,9 +221,30 @@ svg.point {
 	color: #6b7ff0;
 }
 
+.buttons {
+	/* border: solid 1px pink; */
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+}
+
+#reduce,
+#increase {
+	border: none;
+	padding: 10px;
+	background-color: #eaeaeb;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s ease-in-out;
+}
+
+#reduce:hover,
+#increase:hover {
+	background-color: #c2c2c2;
+}
+
 #cool,
 #warm {
-	background-color: #d9d9d9;
 	border: none;
 	display: flex;
 	justify-content: center;
@@ -236,13 +257,6 @@ svg.point {
 	letter-spacing: 1px;
 	font-weight: 500;
 	gap: 5px;
-}
-
-#cool:hover,
-#warm:hover,
-#reduce:hover,
-#increase:hover {
-	background-color: #c2c2c2;
 }
 
 #cool {
@@ -270,22 +284,6 @@ svg.point {
 .controls p {
 	font-size: 14px;
 	margin: 0 0 10px 0;
-}
-
-.buttons {
-	/* border: solid 1px pink; */
-	display: flex;
-	justify-content: center;
-	gap: 15px;
-}
-#reduce,
-#increase {
-	border: none;
-	padding: 10px;
-	background-color: #eaeaeb;
-	border-radius: 4px;
-	cursor: pointer;
-	transition: background-color 0.3s ease-in-out;
 }
 
 .room {
@@ -547,4 +545,27 @@ span.room-status {
 
 .hidden {
 	display: none;
+}
+
+.time-scheduler-inner {
+	display: flex;
+	justify-content: space-around;
+	align-items: flex-start;
+	border: solid 1px #e7e7e7;
+	margin-top: 0.3rem;
+	margin-top: 10px;
+	padding: 10px 20px;
+	border-radius: 26px;
+	font-size: 14px;
+	gap: 8rem;
+}
+
+.time-block {
+	display: flex;
+	flex-direction: column;
+}
+
+.time-block label {
+	margin-bottom: 0.3rem;
+	font-weight: bold;
 }
