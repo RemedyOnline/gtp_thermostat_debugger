@@ -13,22 +13,22 @@ test("Selected room matches room in the dropdown", () => {
 	expect(room).toEqual({ name: "Living Room", currTemp: 25 });
 });
 
-// test("Check the initial state of the Air Conditioners", () => {
-// 	const room = rooms[0];
-// 	expect(room.airConitionerOn).toBe(false);
-// });
+test("Check if the toggleACon function works", () => {
+	const room = rooms[0];
+	toggleAircon(room);
+	expect(room.airConditionerOn).toBe(true);
+});
 
-// test("Check if the toggleACon function works", () => {
-// 	const room = rooms[0];
-// 	toggleAircon(room);
-// 	expect(room.airConitionerOn).toBe(true);
-// });
+test("Check if the toggleACon works as expected if function is called again", () => {
+	const room = rooms[0];
+	toggleAircon(room);
+	expect(room.airConditionerOn).toBe(false);
+});
 
-// test("Check if the toggleACon works as expected if function is called again", () => {
-// 	const room = rooms[0];
-// 	toggleAircon(room);
-// 	expect(room.airConitionerOn).toBe(false);
-// });
+test("Check the initial state of the Air Conditioners", () => {
+	const room = rooms[0];
+	expect(room.airConditionerOn).toBe(false);
+});
 
 test("setCurrTemp should update currTemp property", () => {
 	const room = rooms[0];
@@ -43,8 +43,3 @@ test("Room startTime should match HH:MM format", () => {
 	const time = "15:32";
 	expect(time).toMatch(/^\d{2}:\d{2}$/);
 });
-
-document.body.innerHTML = `
-<div id='rooms'></div>
-<div id='temp'></div>
-`;

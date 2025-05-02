@@ -46,6 +46,14 @@ body {
 	align-items: start;
 }
 
+@media (max-width: 800px) {
+	.main-container {
+		flex-direction: column;
+		gap: 20px;
+		align-items: start;
+	}
+}
+
 .main-content {
 	display: flex;
 	flex-direction: column;
@@ -84,16 +92,13 @@ body {
 
 .temperature {
 	position: relative;
-	/* border: solid 2px pink; */
 }
 
 .temperature svg {
-	/* border: solid 1px black; */
 	position: absolute;
 	left: -100px;
 	top: -68px;
 	height: 250px;
-	/* margin: 50px 0 50px 0; */
 	display: none;
 }
 .indicator {
@@ -102,15 +107,12 @@ body {
 }
 
 svg.point {
-	/* display: none; */
-	/* border: solid 1px pink; */
 	position: absolute;
 	left: 38px;
 	top: 40px;
 	height: 24px;
 	z-index: 10;
 	transition: transform 0.2s ease-in-out;
-	/* transform: translate(18px, -60px); */
 }
 
 #temp {
@@ -165,7 +167,6 @@ svg.point {
 
 .inputs {
 	margin: 0 0 20px 0;
-	/* border: solid 1px pink; */
 	display: flex;
 	align-items: center;
 	gap: 5px;
@@ -222,7 +223,6 @@ svg.point {
 }
 
 .buttons {
-	/* border: solid 1px pink; */
 	display: flex;
 	justify-content: center;
 	gap: 15px;
@@ -291,7 +291,6 @@ svg.point {
 	height: 200px;
 	margin: 0 0 30px 0;
 	position: relative;
-	/* background-image: url("./assets/living-room.jpg"); */
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
@@ -349,7 +348,7 @@ svg.point {
 }
 
 .time-display {
-	display: flex; /* Make time elements horizontal */
+	display: flex;
 	justify-content: space-between;
 	gap: 10px;
 	border: solid 1px #e7e7e7;
@@ -360,8 +359,6 @@ svg.point {
 }
 
 .bars {
-	/* border: solid 1px pink; */
-	/* width: 100%; */
 	display: flex;
 	justify-content: space-between;
 	gap: 5px;
@@ -379,7 +376,7 @@ svg.point {
 }
 
 .time {
-	padding-left: 10px; /* Add spacing between times */
+	padding-left: 10px;
 }
 
 @media only screen and (max-width: 470px) {
@@ -400,7 +397,6 @@ svg.point {
 
 span.room-status {
 	display: block;
-	/* border: solid 1px pink; */
 	margin: 20px 0 0 0;
 	color: #7c7c83;
 }
@@ -408,7 +404,6 @@ span.room-status {
 #ac_container {
 	width: 100%;
 	margin-top: 1.5rem;
-	/* background-color: red; */
 	display: flex;
 	justify-content: center;
 }
