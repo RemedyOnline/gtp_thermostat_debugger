@@ -28,3 +28,4 @@ This web application allows you to manage Air Conditioner (AC) schedules for dif
 - Times must be set in 24-hour format.
 - The scheduler is hidden until the AC for a room is turned ON.
 - Each room's schedule is maintained separately to allow flexible control.
+- A toast message is showed for almost every completed activity for better UX.

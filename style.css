@@ -415,10 +415,11 @@ span.room-status {
 	background-color: #4c7aaf;
 	color: white;
 	cursor: pointer;
+	font-size: 16px;
 }
 
 #openAddRoomModal {
-	padding: 0.2rem 0.5rem;
+	padding: 0.4rem 0.5rem;
 	border-radius: 0.5rem;
 	border: none;
 	background-color: #4c7aaf;
