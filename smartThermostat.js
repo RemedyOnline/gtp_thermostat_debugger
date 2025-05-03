@@ -37,12 +37,28 @@ const setCurrTemp = (room, temp) => {
 	room.setCurrTemp(temp);
 };
 
+const setColdPreset = (room, newCold) => {
+	room.setColdPreset(newCold);
+};
+
+const setWarmPreset = (room, newWarm) => {
+	room.setWarmPreset(newWarm);
+};
+
+const decreaseTemp = (room) => {
+	room.currTemp--;
+};
+
+const increaseTemp = (room) => {
+	room.currTemp++;
+};
+
 const checkSchedule = (rooms, currentTime) => {
 	rooms.forEach((room) => {
 		if (room.startTime === currentTime && !room.airConditionerOn) {
 			room.toggleAircon();
 		}
-		if (room.endTime === currentTime && !room.airConditionerOn) {
+		if (room.endTime === currentTime && room.airConditionerOn) {
 			room.toggleAircon();
 		}
 	});
@@ -52,5 +68,9 @@ module.exports = {
 	rooms,
 	toggleAircon,
 	setCurrTemp,
+	setColdPreset,
+	setWarmPreset,
+	decreaseTemp,
+	increaseTemp,
 	checkSchedule,
 };
