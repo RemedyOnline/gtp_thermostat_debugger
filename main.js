@@ -431,7 +431,7 @@ const generateRooms = () => {
 
 	const allAC_btn = document.createElement("button");
 	allAC_btn.id = "turnOnAll";
-	allAC_btn.textContent = "Turn on All ACs";
+	allAC_btn.textContent = "Turn ON All ACs";
 
 	roomsControlContainer.innerHTML = roomsHTML;
 	roomsControlContainer.appendChild(AC_container);
@@ -440,17 +440,32 @@ const generateRooms = () => {
 	// turning on all ACs...
 	const allAC_btns = document.getElementById("turnOnAll");
 
-	allAC_btns.addEventListener("click", (event) => {
-		if (event.target.id === "turnOnAll") {
-			rooms.forEach((room) => {
-				room.airConditionerOn = true;
-			});
-			saveRoomDetails();
-			generateRooms();
+	// checking if AC is ON for all rooms...
+	const areAllACsON = () => rooms.every((room) => room.airConditionerOn);
+
+	const updateAllAC_btn = () => {
+		allAC_btn.textContent = areAllACsON()
+			? "Turn OFF All ACs"
+			: "Turn ON All ACs";
+	};
+	updateAllAC_btn();
+
+	allAC_btn.addEventListener("click", () => {
+		if (areAllACsON()) {
+			// turn them all OFF...
+			rooms.forEach((room) => (room.airConditionerOn = false));
+			console.log("All AC's turned OFF!");
+			showNotification("All AC's turned OFF!");
+		} else {
+			// turn them all ON...
+			rooms.forEach((room) => (room.airConditionerOn = true));
 			console.log("All AC's turned ON!");
 			showNotification("All AC's turned ON!");
-			toast.style.backgroundColor = "";
 		}
+		toast.style.backgroundColor = "";
+		saveRoomDetails();
+		generateRooms();
+		updateAllAC_btn();
 	});
 
 	//taking start-time inputs...
